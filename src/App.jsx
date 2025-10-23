@@ -19,6 +19,9 @@ import { ResumenCita } from "./pages/resumenCita/ResumenCita";
 import { ProtectedRoute } from "./components/protectedRoute/ProtectedRoute";
 import { PaginaNoAutorizado } from "./pages/paginaNoAutorizado/PaginaNoAutorizado"
 import DashboardCitas from "./pages/dashboardCitas/DashboardCitas";
+import { PagoExitoso } from './pages/pagoVistas/PagoExitoso';
+import { PagoFallido } from './pages/pagoVistas/PagoFallido';
+import { PagoPendiente } from './pages/pagoVistas/PagoPendiente';
 
 function App() {
   return (
@@ -71,6 +74,30 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["PACIENTE"]}>
                 <HomeHistorial />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="pago-exitoso"
+            element={
+              <ProtectedRoute allowedRoles={["PACIENTE"]}>
+                <PagoExitoso />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="pago-pendiente"
+            element={
+              <ProtectedRoute allowedRoles={["PACIENTE"]}>
+                <PagoPendiente />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="pago-fallido"
+            element={
+              <ProtectedRoute allowedRoles={["PACIENTE"]}>
+                <PagoFallido />
               </ProtectedRoute>
             }
           />

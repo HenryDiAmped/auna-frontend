@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import sedeService from '../../services/sedeService';
 import detalleSedeService from '../../services/detalleSedeService';
 import { TablaTurnos } from '../../components/tablaTurnos/TablaTurnos'
+import "./DetallarCita.css"
 
 export const DetallarCita = () => {
     const { idSede } = useParams();
@@ -75,6 +76,12 @@ export const DetallarCita = () => {
                                 </option>
                             ))}
                         </select>
+                    </div>
+
+                    <div>
+                        <a href={`/reservaCitas/detallaCita/${idSede}`} className="boton-recargar">
+                            <i className="fas fa-sync-alt"></i> Elegir de nuevo
+                        </a>
                     </div>
 
                     {especialidadSeleccionada && (
