@@ -1,53 +1,57 @@
-// SidebarP.jsx
-
 import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import "./SidebarP.css";
 
-// Recibir setBackgroundColor como prop
-export const SidebarP = ({ setBackgroundColor, currentBackgroundColor }) => {
+// Recibimos las nuevas props para el color de fondo y el tamaño de la fuente
+export const SidebarP = ({ setBackgroundColor, currentBackgroundColor, setFontSizeScale, currentFontSizeScale }) => {
     const [collapsed, setCollapsed] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const navigate = useNavigate();
 
+    // Recuperar usuario (Asegúrate de que 'usuario' existe en localStorage)
     const usuario = JSON.parse(localStorage.getItem("usuario"));
-    
-    // ... (El resto del código de useEffects y toggleSidebar se mantiene igual)
+
+    // Detecta si es móvil al cargar y al cambiar el tamaño de la pantalla
     useEffect(() => {
         const checkIfMobile = () => {
-          setIsMobile(window.innerWidth <= 768);
+            setIsMobile(window.innerWidth <= 768);
         };
-    
+
         checkIfMobile();
         window.addEventListener("resize", checkIfMobile);
-    
+
         return () => {
-          window.removeEventListener("resize", checkIfMobile);
+            window.removeEventListener("resize", checkIfMobile);
         };
     }, []);
-    
+
     useEffect(() => {
         if (isMobile) {
-          setCollapsed(true);
+            setCollapsed(true);
         } else {
-          setCollapsed(false);
+            setCollapsed(false);
         }
     }, [isMobile]);
-    
+
     const toggleSidebar = () => {
         setCollapsed(!collapsed);
     };
-    // ...
 
     const handleLogout = () => {
         localStorage.removeItem("usuario");
         navigate("/ingresar");
     };
 
-    // Función para cambiar el color entre dos opciones (ej. Blanco y Gris claro)
+    // Función para cambiar el color de fondo (Blanco <-> Negro)
     const toggleBackgroundColor = () => {
         const newColor = currentBackgroundColor === '#ffffff' ? '#000000' : '#ffffff';
         setBackgroundColor(newColor);
+    };
+
+    // Función para cambiar el tamaño de la fuente (Normal <-> Grande)
+    const toggleFontSize = () => {
+        const newScale = currentFontSizeScale === 'normal' ? 'large' : 'normal';
+        setFontSizeScale(newScale);
     };
 
     return (
@@ -56,7 +60,6 @@ export const SidebarP = ({ setBackgroundColor, currentBackgroundColor }) => {
                 className={`sidebar d-flex flex-column ${collapsed ? "collapsed" : ""}`}
                 id="sidebar"
             >
-                {/* ... (sidebar-header se mantiene igual) ... */}
                 <div className="sidebar-header">
                     <span className="sidebar-text">
                         PACIENTE: {usuario?.nombre || 'Paciente'} {usuario?.apellido || 'Paciente'}
@@ -70,9 +73,7 @@ export const SidebarP = ({ setBackgroundColor, currentBackgroundColor }) => {
                     </button>
                 </div>
 
-
                 <nav className="nav flex-column mt-2">
-                    {/* ... (NavLinks Citas e Historial se mantienen igual) ... */}
                     <NavLink
                         to="/reservaCitas"
                         className={({ isActive }) =>
@@ -94,8 +95,8 @@ export const SidebarP = ({ setBackgroundColor, currentBackgroundColor }) => {
                         <span className="sidebar-text">Historial</span>
                     </NavLink>
                 </nav>
-                
-                {/* Nuevo Botón de Cambio de Fondo */}
+
+                {/* Botón de Cambio de Fondo */}
                 <div className="p-3">
                     <button
                         className="btn btn-outline-light w-100 d-flex align-items-center justify-content-center"
@@ -103,12 +104,27 @@ export const SidebarP = ({ setBackgroundColor, currentBackgroundColor }) => {
                         title="Cambiar color de fondo"
                     >
                         <i className="bi bi-paint-bucket me-2"></i>
-                        <span className="sidebar-text">Fondo {currentBackgroundColor === '#ffffff' ? 'Claro' : 'Predeterminado'}</span>
+                        <span className="sidebar-text">
+                            {currentBackgroundColor === '#ffffff' ? 'Activar modo Oscuro' : 'Activar modo Claro'}
+                        </span>
+                    </button>
+                </div>
+                
+                {/* Botón para el tamaño de la letra */}
+                <div className="px-3 pb-3">
+                    <button
+                        className="btn btn-outline-light w-100 d-flex align-items-center justify-content-center"
+                        onClick={toggleFontSize}
+                        title="Cambiar tamaño de fuente"
+                    >
+                        <i className="bi bi-fonts me-2"></i>
+                        <span className="sidebar-text">
+                            {currentFontSizeScale === 'normal' ? 'Aumentar Texto' : 'Texto Normal'}
+                        </span>
                     </button>
                 </div>
 
 
-                {/* ... (logout se mantiene igual) ... */}
                 <div className="logout mt-auto p-3 border-top border-secondary">
                     <button
                         className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center"

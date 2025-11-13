@@ -9,23 +9,32 @@ import { Outlet } from "react-router-dom";
 
 export const Home = () => {
     const [isCollapsed, setIsCollapsed] = useState(false);
-    // 1. Nuevo estado para el color de fondo. Por defecto blanco.
     const [backgroundColor, setBackgroundColor] = useState('#ffffff'); 
+    // 1. Nuevo estado para el tamaño de la fuente
+    const [fontSizeScale, setFontSizeScale] = useState('normal'); 
+
+    // Clase CSS condicional para el modo oscuro (fondo negro)
+    const darkTextClass = backgroundColor === '#000000' ? 'dark-mode-text' : '';
+    
+    // 2. Clase CSS condicional para la fuente grande
+    const largeFontClass = fontSizeScale === 'large' ? 'large-font' : '';
 
     return (
         <div 
             className="home-body app-container" 
-            // 2. Aplicar el color de fondo dinámicamente
             style={{ backgroundColor: backgroundColor }}
         >
             <SidebarP 
                 collapsed={isCollapsed} 
                 toggleSidebar={() => setIsCollapsed(!isCollapsed)} 
-                // 3. Pasar la función para cambiar el fondo al Sidebar
                 setBackgroundColor={setBackgroundColor}
-                currentBackgroundColor={backgroundColor} // Opcional: pasar el color actual si lo necesitas
+                currentBackgroundColor={backgroundColor}
+                // 3. Pasar el setter y el estado de la fuente
+                setFontSizeScale={setFontSizeScale}
+                currentFontSizeScale={fontSizeScale}
             />
-            <div className={`main-content ${isCollapsed ? "" : "mobile-pushed"}`}>
+            {/* 4. Aplicar AMBAS clases condicionales */}
+            <div className={`main-content ${isCollapsed ? "" : "mobile-pushed"} ${darkTextClass} ${largeFontClass}`}>
                 <NavbarH toggleSidebar={() => setIsCollapsed(!isCollapsed)} />
                 <Outlet />
             </div>
