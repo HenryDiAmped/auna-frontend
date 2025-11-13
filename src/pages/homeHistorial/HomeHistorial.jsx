@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import citaService from '../../services/citaService';
 import pacienteService from '../../services/pacienteService';
+import './HomeHistorial.css'
 
 export const HomeHistorial = () => {
   const [citas, setCitas] = useState([]);
@@ -86,7 +87,7 @@ export const HomeHistorial = () => {
 
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Mis Citas</h2>
+      <h2 className="text-center mb-4 citas-header-box">Mis Citas</h2>
 
       {loading ? (
         <div className="alert alert-info text-center">Cargando citas...</div>
