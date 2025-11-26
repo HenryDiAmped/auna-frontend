@@ -1,3 +1,7 @@
+[Auna Funcionamiento](https://youtu.be/JXsOC1X9qSA)
+[Validaciones1](https://youtu.be/vIT3yylAnWA)
+[Validaciones2](https://youtu.be/lDIgByClRuI)
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
